@@ -19,4 +19,9 @@
         android:name="uz.orifjon.bookappmvppattern.fragments.ViewFragment"
         android:label="fragment_view"
         tools:layout="@layout/fragment_view" />
+    <fragment
+        android:id="@+id/savedFragment"
+        android:name="uz.orifjon.bookappmvppattern.fragments.SavedFragment"
+        android:label="fragment_saved"
+        tools:layout="@layout/fragment_saved" />
 </navigation>

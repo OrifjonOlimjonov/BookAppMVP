@@ -1,15 +1,12 @@
 package uz.orifjon.bookappmvppattern.fragments
 
 import android.os.Bundle
-import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import uz.orifjon.bookappmvppattern.R
@@ -26,23 +23,23 @@ class MainFragment : Fragment(), BookService {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var adapter: RecyclerViewAdapter
-    private val bookPresenter = BookPresenter(this)
+    companion object {
+        private lateinit var bookPresenter:BookPresenter
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
+        bookPresenter = BookPresenter(this)
         adapter = RecyclerViewAdapter { book, i, imageView ->
             val bundle = Bundle()
             bundle.putSerializable("book",book)
-            val extras: FragmentNavigator.Extras = FragmentNavigator.Extras.Builder()
-                .addSharedElement(imageView, "image_big")
-                .build()
             findNavController().navigate(
                 R.id.action_mainFragment_to_viewFragment,
                 bundle,
                 null,
-                extras
+                FragmentNavigatorExtras(imageView to "image_big")
             )
         }
         binding.rv.adapter = adapter

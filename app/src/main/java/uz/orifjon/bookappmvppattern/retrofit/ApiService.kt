@@ -12,4 +12,8 @@ interface ApiService {
     suspend fun listCoroutine(): ResponseBook
 
 
+    @GET("svc/books/v3/lists/full-overview.json?api-key=mHEoeq4V7sBUGzMCBFJWg0aYY0039j5M")
+     fun list(): Call<ResponseBook>
+
+
 }

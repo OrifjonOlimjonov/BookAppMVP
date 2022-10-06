@@ -4,8 +4,12 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import uz.orifjon.bookappmvppattern.fragments.MainFragment
 import uz.orifjon.bookappmvppattern.models.Book
+import uz.orifjon.bookappmvppattern.models.ResponseBook
 import uz.orifjon.bookappmvppattern.retrofit.ApiClient
 import uz.orifjon.bookappmvppattern.retrofit.ApiService
 
@@ -17,18 +21,28 @@ class BookPresenter(private val bookService: BookService) {
     private var list = ArrayList<Book>()
 
     init {
-        GlobalScope.launch(Dispatchers.IO) {
-            list = apiService.listCoroutine().results.lists[0].books as ArrayList<Book>
-            list = listAddAll(
-                list,
-                apiService.listCoroutine().results.lists[1].books as ArrayList<Book>
-            )
-            list = listAddAll(
-                list,
-                apiService.listCoroutine().results.lists[2].books as ArrayList<Book>
-            )
-            bookService.showBooks(list)
-        }
+//        GlobalScope.launch(Dispatchers.IO) {
+//            list = apiService.listCoroutine().results.lists[0].books as ArrayList<Book>
+//            list = listAddAll(
+//                list,
+//                apiService.listCoroutine().results.lists[1].books as ArrayList<Book>
+//            )
+//            list = listAddAll(
+//                list,
+//                apiService.listCoroutine().results.lists[2].books as ArrayList<Book>
+//            )
+//            bookService.showBooks(list)
+//        }
+        apiService.list().enqueue(object:Callback<ResponseBook>{
+            override fun onResponse(call: Call<ResponseBook>, response: Response<ResponseBook>) {
+                bookService.showBooks(response.body()!!.results.lists[0].books as ArrayList<Book>)
+            }
+
+            override fun onFailure(call: Call<ResponseBook>, t: Throwable) {
+
+            }
+
+        })
     }
 
 

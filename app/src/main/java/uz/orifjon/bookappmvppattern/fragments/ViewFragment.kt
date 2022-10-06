@@ -33,7 +33,7 @@ class ViewFragment : Fragment() {
     ): View{
         binding = FragmentViewBinding.inflate(inflater,container,false)
 
-        val book = arguments?.getSerializable("book") as Book
+        val book = arguments?.getParcelable<Book>("book") as Book
 
         Picasso.get().load(book.book_image).placeholder(R.drawable.place_holder).into(binding.imageView, object :
             Callback {

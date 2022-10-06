@@ -1,5 +1,7 @@
 package uz.orifjon.bookappmvppattern.models
 
+import android.os.Parcel
+import android.os.Parcelable
 import java.io.Serializable
 
 
@@ -29,4 +31,75 @@ data class Book(
     val title: String,
     val updated_date: String,
     val weeks_on_list: Int
-): Serializable
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.createTypedArrayList(BuyLink)!!,
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readInt()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(age_group)
+        parcel.writeString(amazon_product_url)
+        parcel.writeString(article_chapter_link)
+        parcel.writeString(author)
+        parcel.writeString(book_image)
+        parcel.writeInt(book_image_height)
+        parcel.writeInt(book_image_width)
+        parcel.writeString(book_review_link)
+        parcel.writeString(book_uri)
+        parcel.writeTypedList(buy_links)
+        parcel.writeString(contributor)
+        parcel.writeString(contributor_note)
+        parcel.writeString(created_date)
+        parcel.writeString(description)
+        parcel.writeString(first_chapter_link)
+        parcel.writeString(price)
+        parcel.writeString(primary_isbn10)
+        parcel.writeString(primary_isbn13)
+        parcel.writeString(publisher)
+        parcel.writeInt(rank)
+        parcel.writeInt(rank_last_week)
+        parcel.writeString(sunday_review_link)
+        parcel.writeString(title)
+        parcel.writeString(updated_date)
+        parcel.writeInt(weeks_on_list)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Book> {
+        override fun createFromParcel(parcel: Parcel): Book {
+            return Book(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Book?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

@@ -1,20 +1,27 @@
 package uz.orifjon.bookappmvppattern.database
 
 import androidx.room.*
+import io.reactivex.rxjava3.core.Flowable
 import uz.orifjon.bookappmvppattern.models.Book
 
 @Dao
 interface BookDao
 {
     @Insert
-    fun add(book: BookData)
+    fun add(books: BookData)
 
     @Update
-    fun update(book: BookData)
+    fun update(books: BookData)
 
     @Delete
-    fun delete(book: BookData)
+    fun delete(books: BookData)
 
-    @Query("SELECT * FROM BookData")
-    fun list():List<BookData>
+    @Query("DELETE FROM bookdata")
+    fun deleteTable()
+
+    @Query("SELECT * FROM bookdata")
+    fun list():Flowable<List<BookData>>
+
+    @Query("SELECT * FROM bookdata")
+    fun listNotThread(): List<BookData>
 }

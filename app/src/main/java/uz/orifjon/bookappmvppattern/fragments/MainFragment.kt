@@ -7,31 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import retrofit2.Callback
-import retrofit2.Response
 import uz.orifjon.bookappmvppattern.R
 import uz.orifjon.bookappmvppattern.adapters.RecyclerViewAdapter
 import uz.orifjon.bookappmvppattern.databinding.FragmentMainBinding
 import uz.orifjon.bookappmvppattern.models.Book
-import uz.orifjon.bookappmvppattern.models.ResponseBook
-import uz.orifjon.bookappmvppattern.presenter.BookPresenter
+import uz.orifjon.bookappmvppattern.presenter.BookPresenterFragment
 import uz.orifjon.bookappmvppattern.presenter.BookService
-import uz.orifjon.bookappmvppattern.retrofit.ApiClient
-import uz.orifjon.bookappmvppattern.retrofit.ApiService
-import kotlin.coroutines.CoroutineContext
 
-class MainFragment : Fragment(), BookService  {
+class MainFragment : Fragment(), BookService {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var adapter: RecyclerViewAdapter
 
-    companion object {
-        private lateinit var bookPresenter: BookPresenter
-    }
+
+    private lateinit var bookPresenter: BookPresenterFragment
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,13 +44,18 @@ class MainFragment : Fragment(), BookService  {
         }
         binding.rv.adapter = adapter
 
-        bookPresenter = BookPresenter(this)
-        bookPresenter.showBooks()
+
 
 
 
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bookPresenter = BookPresenterFragment(this,requireContext())
+        bookPresenter.showBooks()
     }
 
     override fun showBooks(list: ArrayList<Book>) {

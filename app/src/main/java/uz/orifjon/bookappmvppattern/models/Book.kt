@@ -2,9 +2,11 @@ package uz.orifjon.bookappmvppattern.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
-
+@Entity
 data class Book(
     val age_group: String,
     val amazon_product_url: String,
@@ -23,6 +25,7 @@ data class Book(
     val first_chapter_link: String,
     val price: String,
     val primary_isbn10: String,
+    @PrimaryKey
     val primary_isbn13: String,
     val publisher: String,
     val rank: Int,

@@ -43,6 +43,16 @@ class ViewFragment : Fragment() {
             override fun onError(e: Exception?) {}
         })
 
+        binding.apply {
+            tvAuthor.text = book.contributor
+            tvPages.text = book.weeks_on_list.toString()
+            tvDescription.text = book.description
+            tvRate.text = book.rank.toString()
+            toolbar.setNavigationOnClickListener {
+                findNavController().popBackStack()
+            }
+        }
+
 
         return binding.root
     }
